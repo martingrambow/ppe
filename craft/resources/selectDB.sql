@@ -1,0 +1,7 @@
+SELECT * FROM Materials ORDER BY price;
+SELECT * FROM Customers ORDER BY section;
+SELECT Resources.resourceID, Resources.priceperhour, Employees.name FROM Resources INNER JOIN Employees ON Resources.resourceID=Employees.resourceID ORDER BY Resources.priceperhour;
+SELECT Resources.resourceID, Resources.priceperhour, Machines.label FROM Resources INNER JOIN Machines ON Resources.resourceID=Machines.resourceID ORDER BY Resources.priceperhour DESC;
+SELECT Orders.orderID, Orders.day, Customers.name, Customers.adress, Customers.zip, Customers.section FROM Orders INNER JOIN Customers ON Orders.customerID=Customers.customerID ORDER BY Orders.day DESC;
+SELECT Orders.orderID, Orders.day, Customers.name, Customers.adress, Customers.zip, Customers.section, Materials.name, Materials.price, Orders_Materials.amount FROM Orders INNER JOIN Customers ON Orders.customerID=Customers.customerID INNER JOIN Orders_Materials ON Orders.orderID=Orders_Materials.orderID INNER JOIN Materials ON Orders_Materials.name=Materials.name ORDER BY Orders.orderID, Materials.price DESC;
+SELECT Orders.orderID, Orders.day, Customers.name, Customers.adress, Customers.zip, Customers.section, Resources.priceperhour, Employees.name, Orders_Resources.hours FROM Orders INNER JOIN Customers ON Orders.customerID=Customers.customerID INNER JOIN Orders_Resources ON Orders.orderID=Orders_Resources.orderID INNER JOIN Resources ON Orders_Resources.resourceID=Resources.resourceID INNER JOIN Employees ON Employees.resourceID=Resources.resourceID ORDER BY Orders.orderID, Resources.priceperhour DESC;

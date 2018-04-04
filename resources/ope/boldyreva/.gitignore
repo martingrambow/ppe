@@ -1,0 +1,10 @@
+.idea
+*.egg-info
+*.egg
+build
+*.pyc
+.*.swp
+.cache
+.coverage
+dist/
+htmlcov/

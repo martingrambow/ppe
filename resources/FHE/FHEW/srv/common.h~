@@ -1,0 +1,131 @@
+#ifndef COMMON_H
+#define COMMON_H
+
+
+#include <iostream>
+#include <cstdlib>
+#include "../LWE.h"
+#include "../FHEW.h"
+#include <cassert>
+#include <unordered_map>
+
+using namespace std;
+
+
+void SaveSecretKey(const LWE::SecretKey* ct, char* filepath);
+LWE::SecretKey* LoadSecretKey(char* filepath);
+
+
+void SaveEvalKey(const FHEW::EvalKey *EK, char* filepath);
+FHEW::EvalKey* LoadEvalKey(char* filepath);
+
+
+void SaveCipherText(const LWE::CipherText* ct, char* filepath);
+LWE::CipherText* LoadCipherText(char* filepath);
+
+typedef unordered_map<string, const char *> argmap_t;
+
+template<class T>
+bool doArgProcessing(T *value, const char *s)
+{
+  string ss(s);
+  stringstream sss(ss);
+  return bool(sss >> *value);
+}
+
+bool doArgProcessing(string *value, const char *s);
+
+/* ArgProcessor: virtual base class */
+
+class ArgProcessor {
+public:
+virtual bool process(const char *s) = 0;
+};
+
+/* ArgProcessorDerived: templated subclasses */
+
+template<class T>
+class ArgProcessorDerived : public ArgProcessor   {
+public:
+  T *value;
+
+  virtual bool process(const char *s)
+  {
+    return doArgProcessing(value, s);
+  }
+
+  ArgProcessorDerived(T* _value) : value(_value) {}
+};
+
+class ArgMapping {
+public:
+  unordered_map< string, shared_ptr<ArgProcessor> > map;
+  stringstream doc;
+
+  // no documentation
+  template<class T>
+  void arg(const char *name, T& value) 
+  { 
+    shared_ptr<ArgProcessor> ap = 
+      shared_ptr<ArgProcessor>(new ArgProcessorDerived<T>(&value));
+
+    assert(!map[name]);
+    map[name] = ap;
+  }
+
+  // documentation + standard default info
+  template<class T>
+  void arg(const char *name, T& value, const char *doc1) 
+  {
+    arg(name, value);
+    doc << "\t" << name << " \t" << doc1 << "  [ default=" << value << " ]" << "\n";
+  }
+
+  // documentation + standard non-standard default info: 
+  // NULL => no default info
+  template<class T>
+  void arg(const char *name, T& value, const char *doc1, const char *info) 
+  {
+    arg(name, value);
+    doc << "\t" << name << " \t" << doc1; 
+    if (info) 
+      doc << "  [ default=" << info << " ]"  << "\n";
+    else
+      doc << "\n";
+  }
+
+  void note(const char *s)
+  {
+    doc << "\t\t   " << s << "\n";
+  }
+
+  void usage(const char *prog) 
+  {
+    cerr << "Usage: " << prog << " [ name=value ]...\n";
+    cerr << documentation();
+    exit(0);
+  }
+
+  void parse(int argc, char **argv)
+  {
+    for (long i = 1; i < argc; i++) {
+      const char *x = argv[i];
+      long j = 0;
+      while (x[j] != '=' && x[j] != '\0') j++; 
+      if (x[j] == '\0') usage(argv[0]);
+      string name(x, j);
+      const char *s = x+j+1;
+
+      shared_ptr<ArgProcessor> ap = map[name];
+      if (!ap) return usage(argv[0]);
+      if (!ap->process(s)) usage(argv[0]);
+    }
+  }
+
+  string documentation() 
+  {
+    return doc.str();
+  }
+};
+
+#endif

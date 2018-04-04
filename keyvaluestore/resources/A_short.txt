@@ -1,0 +1,55 @@
+INSERT#44349#1994#12#5#12#0#40#Lissabon#family#bike#car#work#cat#summer#water
+INSERT#24361#2001#1#8#5#10#51#Belgrad#car#home#winter#dog
+INSERT#17545#2006#9#15#21#17#30#Prag#winter#bike#family#work#water#car
+INSERT#42710#2013#9#23#20#24#27#Minsk#nature#car#sport#home#autumn
+INSERT#17703#1994#2#23#3#41#51#Tallinn#spring#water#car#winter#autumn#work#sport#nature#home
+INSERT#12101#2001#2#27#2#16#36#Skopje#winter#water#car#summer
+INSERT#12322#2008#2#2#23#46#50#Tirana#sport
+INSERT#6920#1997#5#11#0#21#36#Moskau#spring#family#home
+INSERT#32037#1998#2#11#20#51#7#Riga#spring#home#bike#sport#water#car#work#autumn
+INSERT#23180#2009#12#18#7#27#6#Bratislava#home#winter#bike#nature#family
+SELECT#hour = 23
+INSERT#32268#1996#10#21#18#34#7#Berlin#spring#dog#bike#winter#summer#autumn#home#nature
+INSERT#3533#2006#11#25#5#52#48#Tallinn#work#car#home#dog#summer#autumn
+INSERT#40617#2013#1#18#18#57#40#Tallinn#cat#sport#bike
+INSERT#6313#2002#11#8#15#19#44#Tirana#dog#summer#nature#autumn#family
+INSERT#42085#2000#8#6#14#40#0#Helsinki#cat#autumn#home#bike
+INSERT#25185#2003#7#24#7#59#12#Bukarest#bike#winter#dog#cat
+INSERT#9933#2016#11#28#20#27#11#Oslo#home#winter#bike#sport#cat#summer
+INSERT#17692#2002#8#17#17#45#29#Budapest#nature#autumn#sport#home#work#car
+INSERT#28407#2010#6#22#13#59#54#London#winter#autumn#cat#sport
+INSERT#6374#1992#2#25#22#26#57#Athen#sport#nature#cat#winter#water#summer#car#dog
+SELECT#location = Podgorica
+INSERT#35941#1998#11#3#19#47#15#Belgrad#spring#sport#work#water
+INSERT#31467#1994#10#15#12#27#19#Vilnius#dog#water#car
+INSERT#28375#2014#12#5#3#54#50#Budapest#winter#family#car#sport#summer#autumn#cat#bike
+INSERT#37425#2000#5#5#15#25#3#Skopje#bike#water#sport#dog#nature
+INSERT#11264#2002#11#15#11#5#51#Moskau#water
+INSERT#30530#2003#10#25#11#58#17#Bratislava#dog#winter#car
+INSERT#11595#1991#2#15#23#50#6#Podgorica#water
+INSERT#35653#2003#3#25#2#16#15#Monaco#bike#winter#work#home#car#spring#sport
+INSERT#40657#2005#3#3#10#48#51#Berlin#sport#water#nature
+INSERT#253#1994#7#18#6#5#2#Warschau#bike#water#car#work#home#autumn#dog#summer#sport
+SELECT#location = Brüssel
+INSERT#15666#2014#9#2#2#59#35#London#winter#autumn#sport#home#family#dog#water#nature
+INSERT#44935#1999#9#23#5#7#9#Brüssel#autumn#sport#nature#water#dog#home#bike#car
+INSERT#14116#2012#4#8#7#38#32#London#winter#summer#cat#family
+INSERT#20008#2000#4#10#4#26#50#Moskau#nature
+INSERT#14726#2011#11#20#5#58#50#Wien#car#home#summer#water#dog
+INSERT#30228#1996#4#11#4#26#40#Budapest#family#dog#winter#car#nature#work#spring
+INSERT#37241#1999#4#12#10#29#31#Ljubljana#winter#home#bike#work#dog#cat#autumn#car#water
+INSERT#33170#2012#1#2#17#1#8#Paris#summer#water#dog#bike#nature#sport
+INSERT#42719#2016#2#17#5#6#29#Kopenhagen#summer#home#sport#autumn#family#water#cat
+INSERT#27718#1995#9#6#2#49#39#Ljubljana#bike#dog#winter
+SELECT#hour <= 3|tag = work
+INSERT#46028#1996#10#4#14#33#16#Monaco#spring#dog
+INSERT#4259#1998#11#1#12#31#17#Dublin#nature#water#family#winter#cat#spring#car#bike
+INSERT#43828#2008#10#11#5#52#14#Helsinki#winter#summer
+INSERT#49340#2004#9#23#9#32#57#London#dog#home#winter#sport#nature#autumn#car
+INSERT#20311#1993#3#14#5#39#4#Warschau#dog#cat#work#water#bike
+INSERT#21793#2011#4#22#1#20#24#Nikosia#water#bike#cat#home#work#winter#car#summer#family
+INSERT#28515#2008#4#21#13#4#46#Bratislava#dog#water#nature#bike#autumn#home
+INSERT#49194#2001#10#20#20#12#48#Nikosia#spring#family#work#cat#water#car#winter
+INSERT#26472#1992#3#27#12#54#58#Bukarest#family#home#summer#work#winter#bike#sport#dog#nature
+INSERT#7917#2003#3#21#6#44#26#Vilnius#family#water
+SELECT#month = 3

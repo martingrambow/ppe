@@ -1,0 +1,141 @@
+#include <fstream>
+#include <sstream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <string>
+#include <algorithm>
+#include <unistd.h>
+#include <iostream>
+#include <cstdlib>
+#include <cassert>
+#include <sys/time.h>
+#include <sys/types.h> 
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include "../LWE.h"
+#include "../FHEW.h"
+#include "common.h"
+
+using namespace std;
+
+bool debug=false;
+int port=3000;
+char* secKeyFile;
+
+// Starts decryption server.
+int main(int argc, char *argv[]){
+  
+  if (argc != 4) {
+    std::cout << "Usage: " << argv[0] << " port secKey debug(0/1)" << std::endl;
+    exit(0);
+  } 
+  port = atoi(argv[1]);
+  secKeyFile = argv[2];
+  debug = argv[3];  
+  
+  FHEW::Setup();
+
+  // Read the public key from disk
+  if (debug) std::cout << "Start reading secret key ..." << std::endl;
+	LWE::SecretKey* SK = LoadSecretKey(secKeyFile);
+
+  if (debug) std::cout << "Start decryption server ..." << std::endl;
+  //Socket file descriptor
+  int socketFileDescriptor;
+  //Domain = Internet; Type = Steam; Protcol = unspecified = 0
+  socketFileDescriptor = socket(AF_INET, SOCK_STREAM, 0);
+  if (socketFileDescriptor < 0){
+    std::cerr << "ERROR: Unable to open socket." << std::endl;
+    exit(1);
+  }
+  //Create struct for socket and fill with zeros
+  struct sockaddr_in serv_addr, cli_addr;
+  bzero((char *) &serv_addr, sizeof(serv_addr));
+  //Inititalize socket
+  serv_addr.sin_family = AF_INET;
+  serv_addr.sin_addr.s_addr = INADDR_ANY;
+  serv_addr.sin_port = htons(port);
+  //bind socket
+  if (bind(socketFileDescriptor, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
+    std::cerr << "ERROR: Unable to bind on port " << port << "." << std::endl;
+    exit(1);
+  }
+  //Socket for transmission
+  int transmissionSocket;  
+  //Lenght
+  socklen_t addrLen;
+  //used buffer
+  char buffer[256];  
+  int n;  
+  //Listen on port; no waiting queue
+  listen(socketFileDescriptor, 1);
+  bool end = false;
+  std::cout << "Decryption server started and listening on port " << port << "." << std::endl;
+
+  while(!end) {
+    //Accept next request
+    addrLen = sizeof(cli_addr);
+    transmissionSocket = accept(socketFileDescriptor, (struct sockaddr*) &cli_addr, &addrLen);
+    if (transmissionSocket < 0) {
+      std::cerr << "ERROR: Unable to accept." << std::endl;
+      exit(1);
+    }
+    bzero(buffer,256);
+    n = read(transmissionSocket,buffer,255);
+    if (n < 0) {
+      std::cerr << "ERROR: Unable to read from socket." << std::endl;
+      exit(1);
+    }
+    //Handle Request    
+    char * answer = new char[5];
+    string unhandled = "Unhandled request.\n";
+    answer = new char[unhandled.length() + 1];
+    strcpy(answer, unhandled.c_str());
+    string requestString = buffer;
+    if (debug) std::cout << "Request: " << requestString << std::endl;
+    string cmd = requestString.substr(0,1);
+    
+    //Decrypt with secret key
+    if (cmd.compare("d") == 0) {
+      //d(ecrypt) id
+      //d A1
+      int idSize = requestString.length() - 2;
+      string idStr = requestString.substr(2, idSize-1);
+      string fileName = "files_c/ctx" + idStr + ".bin";
+      char* ct_fn = new char[fileName.length() + 1];
+      strcpy(ct_fn, fileName.c_str());
+      
+      string tmpAnswer = "Processing.\n";
+      LWE::CipherText* ct = LoadCipherText(ct_fn);
+      int m = LWE::Decrypt(*SK,*ct);
+      
+      tmpAnswer = "" + to_string(m) + "\n";
+      
+      answer = new char[tmpAnswer.length() + 1];
+      strcpy(answer, tmpAnswer.c_str());
+    }
+    //quit server
+    if (cmd.compare("q") == 0) {
+      std::cout << "Decryption server ends." << std::endl;
+      end = true;
+      string endMessage = "Decryption server ends.\n";
+      answer = new char[endMessage.length() + 1];
+      strcpy(answer, endMessage.c_str());
+    }
+
+    //Write answer
+    n = write(transmissionSocket, answer, strlen(answer));
+    if (n < 0) {
+      std::cerr << "ERROR: Unable to write to socket." << std::endl;
+      exit(1);
+    }
+    
+    //Close request
+    close(transmissionSocket);
+    //Wait for next request or quit server
+  }  
+  close(socketFileDescriptor);
+  std::cout << "Decryption server stopped." << std::endl;
+  return 0; 
+}
