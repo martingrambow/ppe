@@ -1,6 +1,16 @@
 # Property Preserving Encryption
 
-Repository for software used to benchmark propery preserving encryption schemes.
+This code was used in the paper "Three Tales of Disillusion: Benchmarking Property Preserving Encryption Schemes" 
+
+Bibtex:
+````
+@incollection{paper_pallas_grambow_three_tales_disillusion,
+    Title = {Three Tales of Disillusion: Benchmarking Property Preserving Encryption Schemes},
+    Author = {Frank Pallas and Martin Grambow},
+    Booktitle = {15th International Conference on Trust, Privacy and Security in Digital Business - TrustBus 2018},
+    Year = {2018}
+}
+````
 
 ## Structure:
 ```
