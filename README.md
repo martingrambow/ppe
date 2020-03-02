@@ -1,16 +1,28 @@
 # Property Preserving Encryption
 
-This code was used in the paper "Three Tales of Disillusion: Benchmarking Property Preserving Encryption Schemes" 
+This prototype code was used in the paper "Three Tales of Disillusion: Benchmarking Property Preserving Encryption Schemes" 
 
-Bibtex:
+If you use this software in a publication, please cite it as:
+
+### Text
+Frank Pallas, Martin Grambow. **Three Tales of Disillusion: Benchmarking Property Preserving Encryption Schemes**. In: Proceedings of the 15th International Conference on Trust, Privacy and Security in Digital Business (TrustBus 2018). Springer 2018.
+
+### BibTeX
 ````
 @incollection{paper_pallas_grambow_three_tales_disillusion,
     Title = {Three Tales of Disillusion: Benchmarking Property Preserving Encryption Schemes},
     Author = {Frank Pallas and Martin Grambow},
     Booktitle = {15th International Conference on Trust, Privacy and Security in Digital Business - TrustBus 2018},
-    Year = {2018}
+    Year = {2018},
+    publisher="Springer"
 }
 ````
+
+A full list of our [publications](https://www.mcc.tu-berlin.de/menue/forschung/publikationen/parameter/en/) and [prototypes](https://www.mcc.tu-berlin.de/menue/forschung/prototypes/parameter/en/) is available on our group website.
+
+## License
+
+The code in this repository is licensed under the terms of the [GPUv2 License](LICENSE) license.
 
 ## Structure:
 ```
@@ -85,20 +97,6 @@ These instructions will help you to start/modify the experiments.
 ## Built With
 
 * [Maven](https://maven.apache.org/) - Dependency Management
-
-***
-
-## Authors
-
-* **Martin Grambow** - *Initial work* - [martingrambow](https://github.com/MartinGrambow)
-
-See also the list of [contributors](https://github.com/martingrambow/ppe/contributors) who participated in this project.
-
-***
-
-## License
-
-This project is licensed under the GPUv2 License - see the [LICENSE](LICENSE) file for details
 
 ***
 
